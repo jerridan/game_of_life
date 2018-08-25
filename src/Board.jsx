@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import toPairs from "lodash/toPairs";
 import Cell from "./Cell";
-
-const cellSize = 10;
+import { CELL_SIZE } from "./constants";
 
 export default class Board extends Component {
   constructor(props) {
@@ -15,8 +14,8 @@ export default class Board extends Component {
 
   getPixelPosition = coordinates => {
     return {
-      x: `${coordinates[0] * cellSize}px`,
-      y: `${coordinates[1] * cellSize}px`,
+      x: `${coordinates[0] * CELL_SIZE}px`,
+      y: `${coordinates[1] * CELL_SIZE}px`,
     };
   };
 
