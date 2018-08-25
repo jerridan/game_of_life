@@ -9,14 +9,14 @@ export default class Board extends Component {
     super(props);
     this.state = {
       1: 5,
-      3: 1
+      3: 1,
     };
   }
 
   getPixelPosition = coordinates => {
     return {
       x: `${coordinates[0] * cellSize}px`,
-      y: `${coordinates[1] * cellSize}px`
+      y: `${coordinates[1] * cellSize}px`,
     };
   };
 
@@ -25,10 +25,7 @@ export default class Board extends Component {
     return (
       <div>
         {cellCoordinates.map((coordinates, index) => (
-          <Cell
-            position={this.getPixelPosition(coordinates)}
-            key={index}
-          />
+          <Cell position={this.getPixelPosition(coordinates)} key={index} />
         ))}
       </div>
     );

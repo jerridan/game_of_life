@@ -7,7 +7,7 @@ export default function Cell({ position: { x, y } }) {
     height: "10px",
     left: x,
     bottom: y,
-    position: "absolute"
+    position: "absolute",
   };
 
   return <div style={styles} />;
