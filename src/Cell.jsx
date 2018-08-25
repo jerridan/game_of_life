@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Cell({ x, y }) {
+export default function Cell({ position: { x, y } }) {
   const styles = {
     backgroundColor: "black",
     width: "10px",
@@ -10,5 +10,5 @@ export default function Cell({ x, y }) {
     position: "absolute"
   };
 
-  return <div style={styles}/>
+  return <div style={styles} />;
 }
