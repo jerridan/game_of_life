@@ -1,14 +1,16 @@
 import React, { Component } from "react";
-import toPairs from "lodash/toPairs";
 import Cell from "./Cell";
 import { CELL_SIZE } from "./constants";
+import getCoordinates from "./getCoordinates";
 
 export default class Board extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      1: 5,
-      3: 1,
+      cells: {
+        1: ["5"],
+        3: ["1", "10"],
+      },
     };
   }
 
@@ -20,7 +22,7 @@ export default class Board extends Component {
   };
 
   render() {
-    const cellCoordinates = toPairs(this.state);
+    const cellCoordinates = getCoordinates(this.state.cells);
     return (
       <div>
         {cellCoordinates.map((coordinates, index) => (
