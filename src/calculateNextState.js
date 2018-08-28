@@ -5,25 +5,30 @@ import getPositionsByColumn from "./getPositionsByColumn";
 export default function calculateNextState(cellPositions) {
   const listOfCoordinates = getCoordinates(cellPositions);
 
-  const cellsThatLive = killCellsWithFewerThanTwoNeighbours({
+  const cellsThatLive = saveCellsWithTwoOrThreeNeigbours({
     listOfCoordinates,
     cellPositions,
   });
   return getPositionsByColumn(cellsThatLive);
 }
 
-const killCellsWithFewerThanTwoNeighbours = ({
+const saveCellsWithTwoOrThreeNeigbours = ({
   listOfCoordinates,
   cellPositions,
 }) =>
-  filter(
-    listOfCoordinates,
-    coordinates =>
-      numberOfNeighbours({
-        cell: [coordinates[0], coordinates[1]],
-        cellPositions,
-      }) >= 2,
+  filter(listOfCoordinates, coordinates =>
+    twoOrThreeNeighbours({ coordinates, cellPositions }),
   );
+
+const twoOrThreeNeighbours = ({ coordinates, cellPositions }) =>
+  numberOfNeighbours({
+    cell: [coordinates[0], coordinates[1]],
+    cellPositions,
+  }) === 2 ||
+  numberOfNeighbours({
+    cell: [coordinates[0], coordinates[1]],
+    cellPositions,
+  }) === 3;
 
 const numberOfNeighbours = ({ cell, cellPositions }) => {
   const x = parseInt(cell[0], 10);
