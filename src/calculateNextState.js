@@ -18,7 +18,7 @@ export default function calculateNextState(cellPositions) {
 const numberOfNeighbours = ({ cell, cellPositions }) => {
   const x = parseInt(cell[0], 10);
   const y = parseInt(cell[1], 10);
-  const possibleNeigbourPositions = [
+  const possibleNeighbourPositions = [
     { x: x - 1, y: y + 1 },
     { x: x, y: y + 1 },
     { x: x + 1, y: y + 1 },
@@ -29,7 +29,7 @@ const numberOfNeighbours = ({ cell, cellPositions }) => {
     { x: x + 1, y: y - 1 },
   ];
 
-  return filter(possibleNeigbourPositions, position =>
+  return filter(possibleNeighbourPositions, position =>
     cellExistsAtPosition({ position, cellPositions }),
   ).length;
 };
