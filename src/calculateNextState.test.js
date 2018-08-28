@@ -16,9 +16,22 @@ describe("calculateNextState", () => {
       7: ["1", "2"],
     };
 
-    expect(calculateNextState(cells)).toEqual({
-      6: ["1", "3"],
-      7: ["1"],
-    });
+    const newState = calculateNextState(cells);
+
+    expect(newState[6].includes("2")).toEqual(false);
+    expect(newState[7].includes("2")).toEqual(false);
+  });
+
+  it("keeps a cell with 2 or 3 neighbours", () => {
+    const cells = {
+      6: ["1", "2", "3"],
+      7: ["1", "2"],
+    };
+
+    const newState = calculateNextState(cells);
+
+    expect(newState[6].includes("1")).toEqual(true);
+    expect(newState[6].includes("3")).toEqual(true);
+    expect(newState[7].includes("1")).toEqual(true);
   });
 });
