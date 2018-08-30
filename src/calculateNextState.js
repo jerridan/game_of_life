@@ -8,7 +8,9 @@ export default function calculateNextState(cellPositions) {
     twoOrThreeNeighbours({ coordinates, listOfCoordinates }),
   );
 
-  return getPositionsByColumn(cellsThatLive);
+  const newCells = produceNewCells({ listOfCoordinates });
+
+  return getPositionsByColumn(cellsThatLive.concat(newCells));
 }
 
 const twoOrThreeNeighbours = ({ coordinates, listOfCoordinates }) => {
@@ -20,6 +22,35 @@ const twoOrThreeNeighbours = ({ coordinates, listOfCoordinates }) => {
   return numberOfNeighbours === 2 || numberOfNeighbours === 3;
 };
 
+const produceNewCells = ({ listOfCoordinates }) => {
+  let checkedEmptySpaces = [];
+  let newCells = [];
+
+  const checkedSpacesDoesNotIncludeCoordinates = coordinates =>
+    checkedEmptySpaces.every(
+      fromList => !coordinatesAreEqual(fromList, coordinates),
+    );
+
+  listOfCoordinates.forEach(coordinates => {
+    const emptyNeighbouringSpaces = getAllNeighbourCoordinates(
+      coordinates,
+    ).filter(
+      neighbourCoordinates =>
+        checkedSpacesDoesNotIncludeCoordinates(neighbourCoordinates) &&
+        !cellExistsAtCoordinates({ coordinates: neighbourCoordinates, listOfCoordinates }),
+    );
+
+    emptyNeighbouringSpaces.forEach(coordinates => {
+      checkedEmptySpaces.push(coordinates);
+      if (getNumberOfNeighbours({ coordinates, listOfCoordinates }) === 3) {
+        newCells.push(coordinates);
+      }
+    });
+  });
+
+  return newCells;
+};
+
 const getNumberOfNeighbours = ({ coordinates, listOfCoordinates }) => {
   const neighbours = getAllNeighbourCoordinates(coordinates);
 
@@ -29,10 +60,13 @@ const getNumberOfNeighbours = ({ coordinates, listOfCoordinates }) => {
 };
 
 const cellExistsAtCoordinates = ({ coordinates, listOfCoordinates }) =>
-  listOfCoordinates.some(
-    fromList =>
-      fromList[0] === coordinates[0] && fromList[1] === coordinates[1],
+  listOfCoordinates.some(fromList =>
+    coordinatesAreEqual(fromList, coordinates),
   );
+
+const coordinatesAreEqual = (coordinatesOne, coordinatesTwo) =>
+  coordinatesOne[0] === coordinatesTwo[0] &&
+  coordinatesOne[1] === coordinatesTwo[1];
 
 const getAllNeighbourCoordinates = coordinates => {
   const x = parseInt(coordinates[0], 10);

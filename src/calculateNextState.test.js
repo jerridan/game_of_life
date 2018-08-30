@@ -35,17 +35,21 @@ describe("calculateNextState", () => {
     expect(newState[7].includes("1")).toEqual(true);
   });
 
-  xit("produces a cell in a space neighbouring exactly 3 cells", () => {
+  it("produces a cell in a space neighbouring exactly 3 cells", () => {
     const cells = {
       6: ["1", "2"],
       7: ["1"],
       10: ["2"],
       12: ["0", "2"],
+      20: ["2"],
+      21: ["2"],
+      22: ["0", "2"],
     };
 
     const newState = calculateNextState(cells);
 
     expect(newState[7].includes("2")).toEqual(true);
     expect(newState[11].includes("1")).toEqual(true);
+    expect(newState[21].includes("1")).toEqual(false);
   });
 });
