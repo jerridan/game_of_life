@@ -4,57 +4,47 @@ import getPositionsByColumn from "./getPositionsByColumn";
 export default function calculateNextState(cellPositions) {
   const listOfCoordinates = getCoordinates(cellPositions);
 
-  const cellsThatLive = saveCellsWithTwoOrThreeNeighbours({
-    listOfCoordinates,
-    cellPositions,
-  });
+  const cellsThatLive = listOfCoordinates.filter(coordinates =>
+    twoOrThreeNeighbours({ coordinates, listOfCoordinates }),
+  );
 
   return getPositionsByColumn(cellsThatLive);
 }
 
-const saveCellsWithTwoOrThreeNeighbours = ({
-  listOfCoordinates,
-  cellPositions,
-}) =>
-  listOfCoordinates.filter(coordinates =>
-    twoOrThreeNeighbours({ coordinates, cellPositions }),
-  );
-
-const twoOrThreeNeighbours = ({ coordinates, cellPositions }) => {
+const twoOrThreeNeighbours = ({ coordinates, listOfCoordinates }) => {
   const numberOfNeighbours = getNumberOfNeighbours({
     coordinates,
-    cellPositions,
+    listOfCoordinates,
   });
 
   return numberOfNeighbours === 2 || numberOfNeighbours === 3;
 };
 
-const getNumberOfNeighbours = ({ coordinates, cellPositions }) => {
+const getNumberOfNeighbours = ({ coordinates, listOfCoordinates }) => {
   const neighbours = getAllNeighbourCoordinates(coordinates);
 
-  return neighbours.filter(neighbourCoordinates =>
-    cellExistsAtPosition({ neighbourCoordinates, cellPositions }),
+  return neighbours.filter(coordinates =>
+    cellExistsAtCoordinates({ coordinates, listOfCoordinates }),
   ).length;
 };
 
-const cellExistsAtPosition = ({
-  neighbourCoordinates: { x, y },
-  cellPositions,
-}) =>
-  Object.keys(cellPositions).includes(x.toString()) &&
-  cellPositions[x].includes(y.toString());
+const cellExistsAtCoordinates = ({ coordinates, listOfCoordinates }) =>
+  listOfCoordinates.some(
+    fromList =>
+      fromList[0] === coordinates[0] && fromList[1] === coordinates[1],
+  );
 
 const getAllNeighbourCoordinates = coordinates => {
   const x = parseInt(coordinates[0], 10);
   const y = parseInt(coordinates[1], 10);
   return [
-    { x: x - 1, y: y + 1 },
-    { x: x, y: y + 1 },
-    { x: x + 1, y: y + 1 },
-    { x: x - 1, y: y },
-    { x: x + 1, y: y },
-    { x: x - 1, y: y - 1 },
-    { x: x, y: y - 1 },
-    { x: x + 1, y: y - 1 },
-  ];
+    [x - 1, y + 1],
+    [x, y + 1],
+    [x + 1, y + 1],
+    [x - 1, y],
+    [x + 1, y],
+    [x - 1, y - 1],
+    [x, y - 1],
+    [x + 1, y - 1],
+  ].map(coordinates => [coordinates[0].toString(), coordinates[1].toString()]);
 };
