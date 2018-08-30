@@ -4,7 +4,7 @@ import getPositionsByColumn from "./getPositionsByColumn";
 export default function calculateNextState(cellPositions) {
   const listOfCoordinates = getCoordinates(cellPositions);
 
-  const cellsThatLive = saveCellsWithTwoOrThreeNeigbours({
+  const cellsThatLive = saveCellsWithTwoOrThreeNeighbours({
     listOfCoordinates,
     cellPositions,
   });
@@ -12,7 +12,7 @@ export default function calculateNextState(cellPositions) {
   return getPositionsByColumn(cellsThatLive);
 }
 
-const saveCellsWithTwoOrThreeNeigbours = ({
+const saveCellsWithTwoOrThreeNeighbours = ({
   listOfCoordinates,
   cellPositions,
 }) =>
