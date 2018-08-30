@@ -52,4 +52,23 @@ describe("calculateNextState", () => {
     expect(newState[11].includes("1")).toEqual(true);
     expect(newState[21].includes("1")).toEqual(false);
   });
+
+  it("correctly computes the next state of a toad", () => {
+    const cells = {
+      20: ["10"],
+      21: ["10", "11"],
+      22: ["10", "11"],
+      23: ["11"],
+    };
+
+    const intermediateState = calculateNextState(cells);
+
+    expect(intermediateState).toEqual({
+      20: ["10", "11"],
+      21: ["9"],
+      22: ["12"],
+      23: ["10", "11"],
+    });
+    expect(calculateNextState(intermediateState)).toEqual(cells);
+  });
 });
