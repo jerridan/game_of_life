@@ -1,4 +1,3 @@
-import filter from "lodash/filter";
 import getCoordinates from "./getCoordinates";
 import getPositionsByColumn from "./getPositionsByColumn";
 
@@ -9,6 +8,7 @@ export default function calculateNextState(cellPositions) {
     listOfCoordinates,
     cellPositions,
   });
+
   return getPositionsByColumn(cellsThatLive);
 }
 
@@ -16,24 +16,38 @@ const saveCellsWithTwoOrThreeNeigbours = ({
   listOfCoordinates,
   cellPositions,
 }) =>
-  filter(listOfCoordinates, coordinates =>
+  listOfCoordinates.filter(coordinates =>
     twoOrThreeNeighbours({ coordinates, cellPositions }),
   );
 
-const twoOrThreeNeighbours = ({ coordinates, cellPositions }) =>
-  numberOfNeighbours({
-    cell: [coordinates[0], coordinates[1]],
+const twoOrThreeNeighbours = ({ coordinates, cellPositions }) => {
+  const numberOfNeighbours = getNumberOfNeighbours({
+    coordinates,
     cellPositions,
-  }) === 2 ||
-  numberOfNeighbours({
-    cell: [coordinates[0], coordinates[1]],
-    cellPositions,
-  }) === 3;
+  });
 
-const numberOfNeighbours = ({ cell, cellPositions }) => {
-  const x = parseInt(cell[0], 10);
-  const y = parseInt(cell[1], 10);
-  const possibleNeighbourPositions = [
+  return numberOfNeighbours === 2 || numberOfNeighbours === 3;
+};
+
+const getNumberOfNeighbours = ({ coordinates, cellPositions }) => {
+  const neighbours = getAllNeighbourCoordinates(coordinates);
+
+  return neighbours.filter(neighbourCoordinates =>
+    cellExistsAtPosition({ neighbourCoordinates, cellPositions }),
+  ).length;
+};
+
+const cellExistsAtPosition = ({
+  neighbourCoordinates: { x, y },
+  cellPositions,
+}) =>
+  Object.keys(cellPositions).includes(x.toString()) &&
+  cellPositions[x].includes(y.toString());
+
+const getAllNeighbourCoordinates = coordinates => {
+  const x = parseInt(coordinates[0], 10);
+  const y = parseInt(coordinates[1], 10);
+  return [
     { x: x - 1, y: y + 1 },
     { x: x, y: y + 1 },
     { x: x + 1, y: y + 1 },
@@ -43,12 +57,4 @@ const numberOfNeighbours = ({ cell, cellPositions }) => {
     { x: x, y: y - 1 },
     { x: x + 1, y: y - 1 },
   ];
-
-  return filter(possibleNeighbourPositions, position =>
-    cellExistsAtPosition({ position, cellPositions }),
-  ).length;
 };
-
-const cellExistsAtPosition = ({ position: { x, y }, cellPositions }) =>
-  Object.keys(cellPositions).includes(x.toString()) &&
-  cellPositions[x].includes(y.toString());
