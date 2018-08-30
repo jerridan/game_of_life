@@ -4,13 +4,11 @@ import getPositionsByColumn from "./getPositionsByColumn";
 export default function calculateNextState(cellPositions) {
   const listOfCoordinates = getCoordinates(cellPositions);
 
-  const cellsThatLive = listOfCoordinates.filter(coordinates =>
-    twoOrThreeNeighbours({ coordinates, listOfCoordinates }),
+  return getPositionsByColumn(
+    determineSurvivingCells(listOfCoordinates).concat(
+      produceNewCells(listOfCoordinates),
+    ),
   );
-
-  const newCells = produceNewCells({ listOfCoordinates });
-
-  return getPositionsByColumn(cellsThatLive.concat(newCells));
 }
 
 const twoOrThreeNeighbours = ({ coordinates, listOfCoordinates }) => {
@@ -22,7 +20,12 @@ const twoOrThreeNeighbours = ({ coordinates, listOfCoordinates }) => {
   return numberOfNeighbours === 2 || numberOfNeighbours === 3;
 };
 
-const produceNewCells = ({ listOfCoordinates }) => {
+const determineSurvivingCells = listOfCoordinates =>
+  listOfCoordinates.filter(coordinates =>
+    twoOrThreeNeighbours({ coordinates, listOfCoordinates }),
+  );
+
+const produceNewCells = listOfCoordinates => {
   let checkedEmptySpaces = [];
   let newCells = [];
 
@@ -37,7 +40,10 @@ const produceNewCells = ({ listOfCoordinates }) => {
     ).filter(
       neighbourCoordinates =>
         checkedSpacesDoesNotIncludeCoordinates(neighbourCoordinates) &&
-        !cellExistsAtCoordinates({ coordinates: neighbourCoordinates, listOfCoordinates }),
+        !cellExistsAtCoordinates({
+          coordinates: neighbourCoordinates,
+          listOfCoordinates,
+        }),
     );
 
     emptyNeighbouringSpaces.forEach(coordinates => {
