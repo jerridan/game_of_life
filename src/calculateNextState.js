@@ -11,7 +11,12 @@ export default function calculateNextState(cellPositions) {
   );
 }
 
-const twoOrThreeNeighbours = ({ coordinates, listOfCoordinates }) => {
+const determineSurvivingCells = listOfCoordinates =>
+  listOfCoordinates.filter(coordinates =>
+    hasTwoOrThreeNeighbours({ coordinates, listOfCoordinates }),
+  );
+
+const hasTwoOrThreeNeighbours = ({ coordinates, listOfCoordinates }) => {
   const numberOfNeighbours = getNumberOfNeighbours({
     coordinates,
     listOfCoordinates,
@@ -19,11 +24,6 @@ const twoOrThreeNeighbours = ({ coordinates, listOfCoordinates }) => {
 
   return numberOfNeighbours === 2 || numberOfNeighbours === 3;
 };
-
-const determineSurvivingCells = listOfCoordinates =>
-  listOfCoordinates.filter(coordinates =>
-    twoOrThreeNeighbours({ coordinates, listOfCoordinates }),
-  );
 
 const produceNewCells = listOfCoordinates => {
   let checkedEmptySpaces = [];
