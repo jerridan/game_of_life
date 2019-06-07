@@ -2,14 +2,17 @@ import React, { Component } from "react";
 import Cell from "./Cell";
 import { CELL_SIZE } from "./constants";
 import getCoordinates from "./getCoordinates";
+import calculateNextState from "./calculateNextState";
 
 export default class Board extends Component {
   constructor(props) {
     super(props);
     this.state = {
       cells: {
-        1: ["5"],
-        3: ["1", "10"],
+        20: ["10"],
+        21: ["10", "11"],
+        22: ["10", "11"],
+        23: ["11"],
       },
     };
   }
@@ -21,6 +24,12 @@ export default class Board extends Component {
     };
   };
 
+  nextState = () => {
+    this.setState(state => {
+      return { cells: calculateNextState(state.cells) };
+    });
+  };
+
   render() {
     const cellCoordinates = getCoordinates(this.state.cells);
     return (
@@ -28,6 +37,7 @@ export default class Board extends Component {
         {cellCoordinates.map((coordinates, index) => (
           <Cell position={this.getPixelPosition(coordinates)} key={index} />
         ))}
+        <button onClick={this.nextState}>Next</button>
       </div>
     );
   }
