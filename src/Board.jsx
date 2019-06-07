@@ -3,17 +3,13 @@ import Cell from "./Cell";
 import { CELL_SIZE } from "./constants";
 import getCoordinates from "./getCoordinates";
 import calculateNextState from "./calculateNextState";
+import { beacon, toad } from "./patterns";
 
 export default class Board extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cells: {
-        20: ["10"],
-        21: ["10", "11"],
-        22: ["10", "11"],
-        23: ["11"],
-      },
+      cells: toad,
     };
   }
 
@@ -22,6 +18,14 @@ export default class Board extends Component {
       x: `${coordinates[0] * CELL_SIZE}px`,
       y: `${coordinates[1] * CELL_SIZE}px`,
     };
+  };
+
+  setToad = () => {
+    this.setState(() => ({ cells: toad }));
+  };
+
+  setBeacon = () => {
+    this.setState(() => ({ cells: beacon }));
   };
 
   nextState = () => {
@@ -34,6 +38,8 @@ export default class Board extends Component {
     const cellCoordinates = getCoordinates(this.state.cells);
     return (
       <div>
+        <button onClick={this.setToad}>Toad</button>
+        <button onClick={this.setBeacon}>Beacon</button>
         {cellCoordinates.map((coordinates, index) => (
           <Cell position={this.getPixelPosition(coordinates)} key={index} />
         ))}
