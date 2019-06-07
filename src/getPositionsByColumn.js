@@ -3,7 +3,9 @@ export default function getPositionsByColumn(coordinateList) {
     if (accumulator[coordinates[0]]) {
       return {
         ...accumulator,
-        [coordinates[0]]: accumulator[coordinates[0]].concat(coordinates[1]).sort(),
+        [coordinates[0]]: accumulator[coordinates[0]]
+          .concat(coordinates[1])
+          .sort((a, b) => a - b),
       };
     }
     return {

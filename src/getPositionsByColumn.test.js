@@ -21,9 +21,9 @@ describe("getPositionsByColumn", () => {
     ];
 
     expect(getPositionsByColumn(cellCoordinates)).toEqual({
-      1: expect.arrayContaining(["5", "13"]),
-      3: expect.arrayContaining(["0", "10", "4"]),
-      10: expect.arrayContaining(["1"]),
+      1: ["5", "13"],
+      3: ["0", "4", "10"],
+      10: ["1"],
     });
   });
 });
