@@ -2,7 +2,10 @@ import mapKeys from "lodash/mapKeys";
 import mapValues from "lodash/mapValues";
 
 export default function getCellsFromLifeFormList(lifeForms) {
-  const lifeForm = lifeForms[0];
+  return lifeForms.map(lifeForm => incrementCoordinates(lifeForm));
+}
+
+function incrementCoordinates(lifeForm) {
   const incrementedByX = incrementXCoordinates(lifeForm);
   return incrementYCoordinates({
     pattern: incrementedByX,
