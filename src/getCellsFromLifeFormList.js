@@ -1,21 +1,10 @@
-import mapKeys from "lodash/mapKeys";
-import mapValues from "lodash/mapValues";
+import flatten from "lodash/flatten";
+import uniq from "lodash/uniq";
 
 export default function getCellsFromLifeFormList(lifeForms) {
-  const lifeForm = lifeForms[0];
-  const incrementedByX = incrementXCoordinates(lifeForm);
-  return incrementYCoordinates({
-    pattern: incrementedByX,
-    coordinates: lifeForm.coordinates,
-  });
+  const cells = lifeForms.map(({ pattern, coordinates }) =>
+    pattern.map(([x, y]) => [x + coordinates[0], y + coordinates[1]]),
+  );
+
+  return uniq(flatten(cells));
 }
-
-const incrementXCoordinates = ({ pattern, coordinates }) =>
-  mapKeys(pattern, (y, x) => parseInt(x) + parseInt(coordinates[0]));
-
-const incrementYCoordinates = ({ pattern, coordinates }) =>
-  mapValues(pattern, yCoordinates => {
-    return yCoordinates.map(y =>
-      (parseInt(y) + parseInt(coordinates[1])).toString(),
-    );
-  });
