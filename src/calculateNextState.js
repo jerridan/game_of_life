@@ -1,14 +1,10 @@
-import getCoordinates from "./getCoordinates";
-import getPositionsByColumn from "./getPositionsByColumn";
+import union from "lodash/union";
 
-export default function calculateNextState(cellPositions) {
-  const listOfCoordinates = getCoordinates(cellPositions);
+export default function calculateNextState(cells) {
+  const survivingCells = determineSurvivingCells(cells);
+  const newCells = produceNewCells(cells);
 
-  return getPositionsByColumn(
-    determineSurvivingCells(listOfCoordinates).concat(
-      produceNewCells(listOfCoordinates),
-    ),
-  );
+  return union(survivingCells, newCells);
 }
 
 const determineSurvivingCells = listOfCoordinates =>
@@ -75,8 +71,8 @@ const coordinatesAreEqual = (coordinatesOne, coordinatesTwo) =>
   coordinatesOne[1] === coordinatesTwo[1];
 
 const getAllNeighbourCoordinates = coordinates => {
-  const x = parseInt(coordinates[0], 10);
-  const y = parseInt(coordinates[1], 10);
+  const x = coordinates[0];
+  const y = coordinates[1];
   return [
     [x - 1, y + 1],
     [x, y + 1],
@@ -86,5 +82,5 @@ const getAllNeighbourCoordinates = coordinates => {
     [x - 1, y - 1],
     [x, y - 1],
     [x + 1, y - 1],
-  ].map(coordinates => [coordinates[0].toString(), coordinates[1].toString()]);
+  ].map(coordinates => [coordinates[0], coordinates[1]]);
 };
