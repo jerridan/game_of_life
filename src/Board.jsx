@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Cell from "./Cell";
 import { CELL_SIZE } from "./constants";
-import getCoordinates from "./getCoordinates";
 import calculateNextState from "./calculateNextState";
 import { beacon, toad } from "./patterns";
 
@@ -35,7 +34,7 @@ export default class Board extends Component {
   };
 
   render() {
-    const cellCoordinates = getCoordinates(this.state.cells);
+    const cellCoordinates = this.state.cells;
     return (
       <div>
         <button onClick={this.setToad}>Toad</button>
