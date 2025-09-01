@@ -1,0 +1,18 @@
+{
+  "jsc": {
+    "parser": { "syntax": "ecmascript", "jsx": true },
+    "transform": {
+      "react": {
+        "runtime": "automatic"
+      }
+    },
+    "target": "esnext"
+  },
+  "env": {
+    "targets": {
+      "node": "22",
+      "browsers": "last 1 chrome version, last 1 firefox version, last 1 safari version"
+    }
+  },
+  "sourceMaps": true
+}
