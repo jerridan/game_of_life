@@ -59,7 +59,9 @@ module.exports = {
   devServer: {
     port: 3000,
     historyApiFallback: true,
-    open: true,
+    open: {
+      app: { name: 'Google Chrome' }
+    },
     hot: true,
     client: { overlay: true }
   },
