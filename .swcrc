@@ -1,6 +1,6 @@
 {
   "jsc": {
-    "parser": { "syntax": "ecmascript", "jsx": true },
+    "parser": { "syntax": "typescript", "tsx": true },
     "transform": {
       "react": {
         "runtime": "automatic"

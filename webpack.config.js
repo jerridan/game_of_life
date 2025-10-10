@@ -5,7 +5,7 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const isDev = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: isDev ? '[name].js' : '[name].[contenthash].js',
@@ -18,13 +18,13 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'swc-loader',
           options: {
             jsc: {
-              parser: { syntax: 'ecmascript', jsx: true },
+              parser: { syntax: 'typescript', tsx: true },
               transform: {
                 react: {
                   runtime: 'automatic',
@@ -45,7 +45,7 @@ module.exports = {
     ]
   },
 
-  resolve: { extensions: ['.js', '.jsx', '.json'] },
+  resolve: { extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'] },
 
   plugins: [
     new HtmlWebpackPlugin({
