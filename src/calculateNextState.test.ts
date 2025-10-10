@@ -1,10 +1,11 @@
 import isEqual from "lodash/isEqual";
 import some from "lodash/some";
 import calculateNextState from "./calculateNextState";
+import { Coordinates } from "./patterns";
 
 describe("calculateNextState", () => {
   it("kills a cell with fewer than 2 neighbours", () => {
-    const cells = [
+    const cells: Coordinates[] = [
       [0, 10],
       [1, 1],
       [1, 2],
@@ -14,7 +15,7 @@ describe("calculateNextState", () => {
   });
 
   it("kills a cell with more than 3 neighbours", () => {
-    const cells = [
+    const cells: Coordinates[] = [
       [6, 1],
       [6, 2],
       [6, 3],
@@ -29,7 +30,7 @@ describe("calculateNextState", () => {
   });
 
   it("keeps a cell with 2 or 3 neighbours", () => {
-    const cells = [
+    const cells: Coordinates[] = [
       [6, 1],
       [6, 2],
       [6, 3],
@@ -45,7 +46,7 @@ describe("calculateNextState", () => {
   });
 
   it("produces a cell in a space neighbouring exactly 3 cells", () => {
-    const cells = [
+    const cells: Coordinates[] = [
       [6, 1],
       [6, 2],
       [7, 1],
@@ -66,7 +67,7 @@ describe("calculateNextState", () => {
   });
 
   it("correctly computes the next state of a toad", () => {
-    const cells = [
+    const cells: Coordinates[] = [
       [20, 10],
       [21, 10],
       [21, 11],

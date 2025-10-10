@@ -4,8 +4,8 @@ import { beacon, toad } from "./patterns";
 describe("getCellsFromLifeFormList", () => {
   it("returns the coordinates of all cells given a single pattern and non-zero coordinates", () => {
     const lifeForms = [
-      { pattern: beacon, coordinates: [10, 15] },
-      { pattern: toad, coordinates: [20, 15] },
+      { pattern: beacon, coordinates: [10, 15] as const },
+      { pattern: toad, coordinates: [20, 15] as const },
     ];
 
     expect(getCellsFromLifeFormList(lifeForms)).toEqual([
