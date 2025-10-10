@@ -1,4 +1,6 @@
-export const toad = [
+export type Coordinates = [number, number];
+
+export const toad: Coordinates[] = [
   [0, 0],
   [1, 0],
   [1, 1],
@@ -7,7 +9,7 @@ export const toad = [
   [3, 1],
 ];
 
-export const beacon = [
+export const beacon: Coordinates[] = [
   [0, 2],
   [0, 3],
   [1, 3],
