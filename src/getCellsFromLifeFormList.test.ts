@@ -1,11 +1,11 @@
 import getCellsFromLifeFormList from "./getCellsFromLifeFormList";
-import { beacon, toad } from "./patterns";
+import { beacon, toad, Coordinates } from "./patterns";
 
 describe("getCellsFromLifeFormList", () => {
   it("returns the coordinates of all cells given a single pattern and non-zero coordinates", () => {
     const lifeForms = [
-      { pattern: beacon, coordinates: [10, 15] as const },
-      { pattern: toad, coordinates: [20, 15] as const },
+      { pattern: beacon, coordinates: [10, 15] as Coordinates },
+      { pattern: toad, coordinates: [20, 15] as Coordinates },
     ];
 
     expect(getCellsFromLifeFormList(lifeForms)).toEqual([
